@@ -4,42 +4,71 @@
     <meta charset="UTF-8">
     <title>Mi página web</title>
     <style>
+      /* Estilos generales */
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+
       /* Estilos para la barra de navegación */
       nav {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 200px;
+        height: 100vh;
         background-color: #333;
         color: #fff;
-        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
       }
 
       nav a {
         color: #fff;
         text-decoration: none;
-        margin-right: 10px;
+        margin-bottom: 10px;
+        padding: 10px 20px;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+      }
+
+      nav a:hover {
+        background-color: #fff;
+        color: #333;
+      }
+      
+      /* Estilos para el contenido de la página */
+      main {
+        margin-left: 200px;
+        padding: 20px;
       }
     </style>
   </head>
   <body>
     <nav>
-      <a href="#">Inicio</a>
+      <a href="#inicio">Inicio</a>
       <a href="#nosotros">Nosotros</a>
       <a href="#servicios">Servicios</a>
       <a href="#contacto">Contacto</a>
     </nav>
 
-    <h1>Bienvenidos a mi página web</h1>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam lobortis turpis at arcu facilisis sagittis. Suspendisse suscipit metus vel diam feugiat, eu sagittis velit pellentesque. Maecenas rhoncus tortor sit amet est aliquam, in finibus libero lobortis.</p>
+    <main>
+      <h1 id="inicio">Bienvenidos a mi página web</h1>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam lobortis turpis at arcu facilisis sagittis. Suspendisse suscipit metus vel diam feugiat, eu sagittis velit pellentesque. Maecenas rhoncus tortor sit amet est aliquam, in finibus libero lobortis.</p>
 
-    <h2 id="nosotros">Nosotros</h2>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam lobortis turpis at arcu facilisis sagittis. Suspendisse suscipit metus vel diam feugiat, eu sagittis velit pellentesque. Maecenas rhoncus tortor sit amet est aliquam, in finibus libero lobortis.</p>
+      <h2 id="nosotros">Nosotros</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam lobortis turpis at arcu facilisis sagittis. Suspendisse suscipit metus vel diam feugiat, eu sagittis velit pellentesque. Maecenas rhoncus tortor sit amet est aliquam, in finibus libero lobortis.</p>
 
-    <h2 id="servicios">Servicios</h2>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam lobortis turpis at arcu facilisis sagittis. Suspendisse suscipit metus vel diam feugiat, eu sagittis velit pellentesque. Maecenas rhoncus tortor sit amet est aliquam, in finibus libero lobortis.</p>
+      <h2 id="servicios">Servicios</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam lobortis turpis at arcu facilisis sagittis. Suspendisse suscipit metus vel diam feugiat, eu sagittis velit pellentesque. Maecenas rhoncus tortor sit amet est aliquam, in finibus libero lobortis.</p>
 
-    <h2 id="contacto">Contacto</h2>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam lobortis turpis at arcu facilisis sagittis. Suspendisse suscipit metus vel diam feugiat, eu sagittis velit pellentesque. Maecenas rhoncus tortor sit amet est aliquam, in finibus libero lobortis.</p>
-  </body>
-</html>
-
+      <h2 id="contacto">Contacto</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam lobortis turpis at arcu facilisis sagittis. Suspendisse suscipit metus vel diam feugiat, eu sagittis velit pellentesque. Maecenas rhoncus tort
