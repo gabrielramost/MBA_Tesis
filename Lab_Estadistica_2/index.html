@@ -1,58 +1,55 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
 	<meta charset="UTF-8">
-	<title>Mi página web</title>
-	<link href="https://fonts.googleapis.com/css?family=Alegreya&display=swap" rel="stylesheet">
+	<title>Mi Página Web</title>
+	<link href="https://fonts.googleapis.com/css?family=Alegreya" rel="stylesheet">
 	<style>
 		body {
-			margin: 0;
-			padding: 0;
 			font-family: 'Alegreya', serif;
 			background-color: #F0F8FF;
+			color: #333;
+			margin: 0;
+			padding: 0;
 		}
 
 		nav {
-			background-color: #87CEEB;
-			height: 50px;
+			background-color: #ADD8E6;
 			display: flex;
-			justify-content: center;
-			align-items: center;
-			position: fixed;
+			justify-content: space-between;
+			padding: 20px;
+			box-shadow: 0 0 10px rgba(0,0,0,0.3);
 			top: 0;
-			left: 0;
-			right: 0;
-			z-index: 1;
+			width: 100%;
+			z-index: 999;
 		}
 
 		nav ul {
+			display: flex;
 			list-style: none;
 			margin: 0;
 			padding: 0;
-			display: flex;
-			align-items: center;
 		}
 
-		nav li {
-			margin: 0 10px;
+		nav ul li {
+			margin-right: 20px;
 		}
 
-		nav a {
+		nav ul li a {
+			color: #333;
 			text-decoration: none;
-			color: #FFFFFF;
 			font-size: 18px;
-			padding: 10px;
-			transition: background-color 0.3s ease;
+			transition: all 0.2s ease-in-out;
 		}
 
-		nav a:hover {
-			background-color: #FFFFFF;
-			color: #87CEEB;
+		nav ul li a:hover {
+			color: #fff;
 		}
 
 		main {
-			margin-top: 50px;
+			margin-top: 80px;
 			padding: 20px;
+			position: relative;
 		}
 	</style>
 </head>
@@ -60,37 +57,15 @@
 	<nav>
 		<ul>
 			<li><a href="Sesion-1.html">Sección 1</a></li>
-			<li><a href="archivo2.html">Sección 2</a></li>
-			<li><a href="archivo3.html">Sección 3</a></li>
-			<li><a href="archivo4.html">Sección 4</a></li>
+			<li><a href="seccion2.html">Sección 2</a></li>
+			<li><a href="seccion3.html">Sección 3</a></li>
+			<li><a href="seccion4.html">Sección 4</a></li>
 		</ul>
 	</nav>
-
 	<main>
-		<!-- Contenido de la página -->
+		<h1>Bienvenidos al Laboratorio de Estadística para el Análisis Político 2</h1>
+		<p>En esta página encontrarás información sobre diferentes temas.</p>
+		<p>Puedes navegar por las diferentes secciones utilizando la barra de navegación ubicada en la parte superior de la página.</p>
 	</main>
-
-	<script>
-		window.onload = function() {
-			var nav = document.querySelector('nav');
-			var main = document.querySelector('main');
-			var links = document.querySelectorAll('nav a');
-			
-			for (var i = 0; i < links.length; i++) {
-				links[i].addEventListener('click', function(event) {
-					event.preventDefault();
-					var href = this.getAttribute('href');
-					var section = document.querySelector(href);
-					var sectionTop = section.offsetTop - nav.offsetHeight;
-					window.scrollTo({
-						top: sectionTop,
-						behavior: 'smooth'
-					});
-				});
-			}
-
-			main.style.marginTop = nav.offsetHeight + 'px';
-		};
-	</script>
 </body>
 </html>
