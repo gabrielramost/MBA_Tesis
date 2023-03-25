@@ -4,74 +4,35 @@
 	<meta charset="UTF-8">
 	<title>Mi Página Web</title>
 	<link href="https://fonts.googleapis.com/css?family=Alegreya" rel="stylesheet">
-	<style>
-		body {
-			font-family: 'Alegreya', serif;
-			background-color: #F0F8FF;
-			color: #333;
-			margin: 0;
-			padding: 0;
-		}
-
-		nav {
-			background-color: #ADD8E6;
-			display: flex;
-			justify-content: space-between;
-			padding: 20px;
-			box-shadow: 0 0 10px rgba(0,0,0,0.3);
-			position: fixed;
-			top: 0;
-			width: 100%;
-			z-index: 999;
-		}
-
-		nav ul {
-			display: flex;
-			list-style: none;
-			margin: 0;
-			padding: 0;
-		}
-
-		nav ul li {
-			margin-right: 20px;
-		}
-
-		nav ul li a {
-			color: #333;
-			text-decoration: none;
-			font-size: 18px;
-			transition: all 0.2s ease-in-out;
-		}
-
-		nav ul li a:hover {
-			color: #fff;
-		}
-
-		main {
-			margin-top: 80px;
-			padding: 20px;
-			position: fixed;
-			top: 80px;
-			left: 0;
-			right: 0;
-			bottom: 0;
-			overflow-y: scroll;
-		}
-	</style>
+	<link rel="stylesheet" href="styles.css">
 </head>
 <body>
 	<nav>
-		<ul class="nav navbar-nav navbar-right">
-			<li><a href="Sesion-1.html">Sección 1</a></li>
-			<li><a href="seccion2.html">Sección 2</a></li>
-			<li><a href="seccion3.html">Sección 3</a></li>
-			<li><a href="seccion4.html">Sección 4</a></li>
+		<ul>
+			<li><a href="#seccion1">Sección 1</a></li>
+			<li><a href="#seccion2">Sección 2</a></li>
+			<li><a href="#seccion3">Sección 3</a></li>
+			<li><a href="#seccion4">Sección 4</a></li>
 		</ul>
 	</nav>
 	<main>
-		<h1>Bienvenidos al Laboratorio de Estadística para el Análisis Político 2</h1>
-		<p>En esta página encontrarás información sobre diferentes temas.</p>
-		<p>Puedes navegar por las diferentes secciones utilizando la barra de navegación ubicada en la parte superior de la página.</p>
+		<section id="seccion1">
+			<h2>Sección 1</h2>
+			<p>Contenido de la sección 1</p>
+		</section>
+		<section id="seccion2">
+			<h2>Sección 2</h2>
+			<p>Contenido de la sección 2</p>
+		</section>
+		<section id="seccion3">
+			<h2>Sección 3</h2>
+			<p>Contenido de la sección 3</p>
+		</section>
+		<section id="seccion4">
+			<h2>Sección 4</h2>
+			<p>Contenido de la sección 4</p>
+		</section>
 	</main>
+	<script src="main.js"></script>
 </body>
 </html>
