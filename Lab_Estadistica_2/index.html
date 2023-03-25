@@ -22,7 +22,6 @@
 			top: 0;
 			width: 100%;
 			z-index: 999;
-			position: fixed; /* Agregado para fijar la barra de navegación */
 		}
 
 		nav ul {
@@ -48,25 +47,46 @@
 		}
 
 		main {
-			margin-top: 100px; /* Agregado para dar espacio al contenido */
+			margin-top: 80px;
 			padding: 20px;
 			position: relative;
+		}
+
+		#seccion1 {
+			scroll-padding-top: 80px;
+		}
+
+		#seccion2 {
+			scroll-padding-top: 80px;
+		}
+
+		#seccion3 {
+			scroll-padding-top: 80px;
+		}
+
+		#seccion4 {
+			scroll-padding-top: 80px;
 		}
 	</style>
 </head>
 <body>
 	<nav>
 		<ul>
-			<li><a href="Sesion-1.html">Sección 1</a></li>
-			<li><a href="seccion2.html">Sección 2</a></li>
-			<li><a href="seccion3.html">Sección 3</a></li>
-			<li><a href="seccion4.html">Sección 4</a></li>
+			<li><a href="#seccion1">Sección 1</a></li>
+			<li><a href="#seccion2">Sección 2</a></li>
+			<li><a href="#seccion3">Sección 3</a></li>
+			<li><a href="#seccion4">Sección 4</a></li>
 		</ul>
 	</nav>
 	<main>
-		<h1>Bienvenidos al Laboratorio de Estadística para el Análisis Político 2</h1>
-		<p>En esta página encontrarás información sobre diferentes temas.</p>
-		<p>Puedes navegar por las diferentes secciones utilizando la barra de navegación ubicada en la parte superior de la página.</p>
-	</main>
-</body>
-</html>
+		<section id="seccion1">
+			<h1>Sección 1</h1>
+			<p>Contenido de la Sección 1</p>
+		</section>
+		<section id="seccion2">
+			<h1>Sección 2</h1>
+			<p>Contenido de la Sección 2</p>
+		</section>
+		<section id="seccion3">
+			<h1>Sección 3</h1>
+			<p>Contenido de la Sección 3
