@@ -1,27 +1,35 @@
 <!DOCTYPE html>
-
 <html>
-
 <head>
+	<title>Barra de navegación</title>
+	<link rel="stylesheet" type="text/css" href="estilos.css">
+	<link href='https://fonts.googleapis.com/css?family=Alegreya' rel='stylesheet'>
+	<script src="jquery.min.js"></script>
+	<script>
+		$(document).ready(function(){
+			$('.nav-link').click(function(){
+				$('.nav-link').removeClass('active');
+				$(this).addClass('active');
+			});
+		});
+	</script>
+</head>
+<body>
+	<header>
+		<nav>
+			<ul>
+				<li><a href="index.html" class="nav-link active">Inicio</a></li>
+				<li><a href="prueba.html" class="nav-link">Acerca</a></li>
+				<li><a href="servicios.html" class="nav-link">Servicios</a></li>
+				<li><a href="contacto.html" class="nav-link">Contacto</a></li>
+			</ul>
+		</nav>
+	</header>
+	
+	<main>
 
-<meta charset="utf-8" />
-<meta name="generator" content="pandoc" />
-<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
-<link rel="stylesheet" href="styles.css">
-<style>
-nav {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  background-color: #3498db;
-}
-main {
-  padding-top: 50px; /* Ajusta la altura según la altura de la barra de navegación */
-}
-</style>
 
 
-<meta name="date" content="2023-03-25" />
 
 <title>prueba</title>
 
@@ -437,6 +445,6 @@ $(document).ready(function () {
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>
-<script src="main.js"></script>
+  </main>
 </body>
 </html>
