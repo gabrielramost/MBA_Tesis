@@ -1,25 +1,36 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<title>Mi Página Web</title>
-	<link href="https://fonts.googleapis.com/css?family=Alegreya" rel="stylesheet">
-	<link rel="stylesheet" href="styles.css">
+	<title>Barra de navegación</title>
+	<link rel="stylesheet" type="text/css" href="estilos.css">
+	<link href='https://fonts.googleapis.com/css?family=Alegreya' rel='stylesheet'>
+	<script src="jquery.min.js"></script>
+	<script>
+		$(document).ready(function(){
+			$('.nav-link').click(function(){
+				$('.nav-link').removeClass('active');
+				$(this).addClass('active');
+			});
+		});
+	</script>
 </head>
 <body>
-	<nav>
-		<ul>
-			<li><a href="prueba.html">Sección 1</a></li>
-			<li><a href="seccion2.html">Sección 2</a></li>
-			<li><a href="seccion3.html">Sección 3</a></li>
-			<li><a href="seccion4.html">Sección 4</a></li>
-		</ul>
-	</nav>
+	<header>
+		<nav>
+			<ul>
+				<li><a href="index.html" class="nav-link active">Inicio</a></li>
+				<li><a href="acerca.html" class="nav-link">Acerca</a></li>
+				<li><a href="servicios.html" class="nav-link">Servicios</a></li>
+				<li><a href="contacto.html" class="nav-link">Contacto</a></li>
+			</ul>
+		</nav>
+	</header>
+	
 	<main>
-		<h1>Bienvenidos al Laboratorio de Estadística para el Análisis Político 2</h1>
-		<p>En esta página encontrarás información sobre diferentes temas.</p>
-		<p>Puedes navegar por las diferentes secciones utilizando la barra de navegación ubicada en la parte superior de la página.</p>
+		<h1>Bienvenidos a mi sitio web</h1>
+		<p>Este es un sitio web minimalista y moderno diseñado con la fuente Alegreya y tonos azules claros.</p>
+		<p>Para navegar por las diferentes secciones de la página, utiliza la barra de navegación horizontal ubicada en la parte superior de la página.</p>
 	</main>
-	<script src="main.js"></script>
+	
 </body>
 </html>
