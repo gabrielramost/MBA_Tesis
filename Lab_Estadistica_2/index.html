@@ -1,97 +1,71 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Mi página web</title>
-    <style>
-      /* Estilos generales */
-      * {
-        box-sizing: border-box;
-      }
+<head>
+	<meta charset="UTF-8">
+	<title>Mi Página Web</title>
+	<link href="https://fonts.googleapis.com/css?family=Alegreya" rel="stylesheet">
+	<style>
+		body {
+			font-family: 'Alegreya', serif;
+			background-color: #F0F8FF;
+			color: #333;
+			margin: 0;
+			padding: 0;
+		}
 
-      body {
-        font-family: 'Alegreya', serif;
-        margin: 0;
-        padding: 0;
-      }
+		nav {
+			background-color: #ADD8E6;
+			display: flex;
+			justify-content: space-between;
+			padding: 20px;
+			box-shadow: 0 0 10px rgba(0,0,0,0.3);
+			position: fixed;
+			top: 0;
+			width: 100%;
+			z-index: 999;
+		}
 
-      /* Estilos para la barra de navegación */
-      nav {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 200px;
-        height: 100vh;
-        background-color: #1c2331;
-        color: #fff;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding: 20px;
-      }
+		nav ul {
+			display: flex;
+			list-style: none;
+			margin: 0;
+			padding: 0;
+		}
 
-      nav a {
-        color: #fff;
-        text-decoration: none;
-        margin-bottom: 10px;
-        padding: 10px 20px;
-        border-radius: 5px;
-        transition: background-color 0.3s ease;
-      }
+		nav ul li {
+			margin-right: 20px;
+		}
 
-      nav a:hover {
-        background-color: #4d648d;
-      }
-      
-      /* Estilos para el contenido de la página */
-      main {
-        margin-left: 200px;
-        padding: 20px;
-      }
-      
-      h1, h2, h3 {
-        color: #1c2331;
-        font-weight: bold;
-        margin-top: 40px;
-        margin-bottom: 20px;
-      }
-      
-      p {
-        color: #505f79;
-        line-height: 1.5;
-        margin-bottom: 20px;
-      }
-      
-      a {
-        color: #4d648d;
-        text-decoration: none;
-        transition: color 0.3s ease;
-      }
-      
-      a:hover {
-        color: #1c2331;
-      }
-      
-    </style>
-    
-    <!-- Fuente Alegreya de Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Alegreya&display=swap" rel="stylesheet">
-    
-  </head>
-  <body>
-    <nav>
-      <a href="#inicio">Inicio</a>
-      <a href="#nosotros">Nosotros</a>
-      <a href="#servicios">Servicios</a>
-      <a href="#contacto">Contacto</a>
-    </nav>
+		nav ul li a {
+			color: #333;
+			text-decoration: none;
+			font-size: 18px;
+			transition: all 0.2s ease-in-out;
+		}
 
-    <main>
-      <h1 id="inicio">Bienvenidos a mi página web</h1>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam lobortis turpis at arcu facilisis sagittis. Suspendisse suscipit metus vel diam feugiat, eu sagittis velit pellentesque. Maecenas rhoncus tortor sit amet est aliquam, in finibus libero lobortis.</p>
+		nav ul li a:hover {
+			color: #fff;
+		}
 
-      <h2 id="nosotros">Nosotros</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam lobortis turpis at arcu facilisis sagittis. Suspendisse suscipit metus vel diam feugiat, eu sagittis velit pellentesque. Maecenas rhoncus tortor sit amet est aliquam, in finibus libero lobortis.</p>
-
-      <h2 id="servicios">Servicios</
+		main {
+			margin-top: 80px;
+			padding: 20px;
+		}
+	</style>
+</head>
+<body>
+	<nav>
+		<ul>
+			<li><a href="seccion1.html">Sección 1</a></li>
+			<li><a href="seccion2.html">Sección 2</a></li>
+			<li><a href="seccion3.html">Sección 3</a></li>
+			<li><a href="seccion4.html">Sección 4</a></li>
+		</ul>
+	</nav>
+	<main>
+		<h1>Bienvenidos a mi página web</h1>
+		<p>En esta página encontrarás información sobre diferentes temas.</p>
+		<p>Puedes navegar por las diferentes secciones utilizando la barra de navegación ubicada en la parte superior de la página.</p>
+	</main>
+</body>
+</html>
