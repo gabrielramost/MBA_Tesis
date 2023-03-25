@@ -32,10 +32,12 @@ nav li a {
   display: block;
   padding: 14px 16px;
   text-align: center;
+  transition: background-color 0.3s;
 }
 
 nav a:hover {
   background-color: #f2f2f2;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.1);
 }
 
 /* Estilos específicos de cada página */
