@@ -1,59 +1,48 @@
+/* Estilos generales */
 body {
-  font-family: 'Alegreya', serif;
+  font-family: 'Alegreya', sans-serif;
   color: #333;
-  background-color: #f2f2f2;
-  margin: 0;
+  background-color: #f7f7f7;
 }
 
-nav {
-  background-color: #2196f3;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-}
-
-nav ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-}
-
-nav li {
-  margin: 0 10px;
-}
-
-nav a {
-  color: #fff;
+a {
   text-decoration: none;
-  transition: all 0.3s ease;
+  color: #333;
 }
 
-nav a:hover {
-  text-decoration: underline;
-}
-
-main {
-  padding: 50px;
-  margin-top: 60px;
-  text-align: center;
-}
-
-h1 {
-  font-size: 3rem;
-  margin-bottom: 20px;
-}
-
-p {
-  font-size: 1.5rem;
-}
+/* Estilos de la barra de navegación */
 nav {
   width: 100%;
   background-color: #fff;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
 }
 
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+nav li {
+  float: left;
+}
+
+nav li a {
+  display: block;
+  padding: 14px 16px;
+  text-align: center;
+}
+
 nav a:hover {
   background-color: #f2f2f2;
+}
+
+/* Estilos específicos de cada página */
+.page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
 }
