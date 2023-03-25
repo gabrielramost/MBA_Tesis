@@ -19,6 +19,7 @@
 			justify-content: space-between;
 			padding: 20px;
 			box-shadow: 0 0 10px rgba(0,0,0,0.3);
+			position: fixed;
 			top: 0;
 			width: 100%;
 			z-index: 999;
@@ -49,23 +50,12 @@
 		main {
 			margin-top: 80px;
 			padding: 20px;
-			position: relative;
-		}
-
-		#seccion1 {
-			scroll-padding-top: 80px;
-		}
-
-		#seccion2 {
-			scroll-padding-top: 80px;
-		}
-
-		#seccion3 {
-			scroll-padding-top: 80px;
-		}
-
-		#seccion4 {
-			scroll-padding-top: 80px;
+			position: fixed;
+			top: 80px;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			overflow-y: scroll;
 		}
 	</style>
 </head>
