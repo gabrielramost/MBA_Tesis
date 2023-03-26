@@ -28,3 +28,30 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 });
+// Desplazamiento suave al hacer clic en los enlaces del menú de navegación
+const navLinks = document.querySelectorAll('.navbar-menu a');
+
+navLinks.forEach((link) => {
+  link.addEventListener('click', (event) => {
+    event.preventDefault();
+    const target = document.querySelector(link.getAttribute('href'));
+    const topOffset = 70; // Altura de la barra de navegación
+    const targetPosition = target.offsetTop - topOffset;
+    window.scrollTo({
+      top: targetPosition,
+      behavior: 'smooth',
+    });
+    toggleMenu();
+  });
+});
+
+// Animación del menú hamburguesa
+const toggleMenu = () => {
+  const menuToggle = document.querySelector('.navbar-toggle');
+  const navbarMenu = document.querySelector('.navbar-menu');
+  menuToggle.classList.toggle('active');
+  navbarMenu.classList.toggle('active');
+};
+
+const menuToggle = document.querySelector('.navbar-toggle');
+menuToggle.addEventListener('click', toggleMenu);
