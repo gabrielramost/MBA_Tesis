@@ -1,3 +1,71 @@
+/* Estilos para dispositivos móviles */
+@media (max-width: 767px) {
+  nav {
+    height: auto;
+  }
+
+  nav ul {
+    flex-direction: column;
+    height: auto;
+    display: none;
+  }
+
+  nav.active ul {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+  }
+
+  nav li {
+    width: 100%;
+    height: 50px;
+    margin: 5px 0;
+  }
+
+  nav a {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+  }
+
+  nav a:hover {
+    background-color: transparent;
+    color: #fff;
+  }
+
+  /* Icono para abrir/cerrar la barra de navegación */
+  .menu-toggle {
+    display: block;
+    font-size: 1.5rem;
+    color: #fff;
+    text-align: center;
+    cursor: pointer;
+    padding: 10px;
+  }
+}
+
+/* Estilos para dispositivos de escritorio */
+@media (min-width: 768px) {
+  nav {
+    height: 70px;
+  }
+
+  nav ul {
+    display: flex;
+  }
+
+  nav li {
+    height: 100%;
+  }
+
+  nav a {
+    padding: 0 20px;
+  }
+}
+
+/* Estilos generales */
 body {
   font-family: 'Alegreya', serif;
   background-color: #e6f2ff;
@@ -8,7 +76,6 @@ body {
 nav {
   background-color: #0077b6;
   width: 100%;
-  height: 70px;
   position: fixed;
   top: 0;
   left: 0;
@@ -25,10 +92,6 @@ nav ul {
   height: 100%;
 }
 
-nav li {
-  height: 100%;
-}
-
 nav a {
   color: #fff;
   text-decoration: none;
@@ -36,7 +99,6 @@ nav a {
   justify-content: center;
   align-items: center;
   height: 100%;
-  padding: 0 20px;
   transition: background-color 0.3s ease-in-out;
 }
 
@@ -57,106 +119,9 @@ section {
 
 section h1, section h2 {
   color: #0077b6;
- 
-@media only screen and (max-width: 768px) {
-nav ul {
-flex-direction: column;
-height: auto;
-}
-nav li {
-width: 100%;
-height: 50px;
-}
-nav a {
-padding: 0;
-width: 100%;
-height: 100%;
-display: block;
-text-align: center;
-}
 }
 
-  nav {
-  background-color: #0077b6;
-  width: 100%;
-  height: 70px;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 999;
-}
-
+/* Icono para abrir/cerrar la barra de navegación */
 .menu-toggle {
-  color: #fff;
-  font-size: 24px;
-  cursor: pointer;
   display: none;
-}
-
-nav ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  height: 100%;
-}
-
-nav li {
-  height: 100%;
-}
-
-nav a {
-  color: #fff;
-  text-decoration: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  padding: 0 20px;
-  transition: background-color 0.3s ease-in-out;
-}
-
-nav a:hover {
-  background-color: #fff;
-  color: #0077b6;
-}
-
-@media (max-width: 768px) {
-  .menu-toggle {
-    display: block;
-    position: absolute;
-    top: 20px;
-    right: 20px;
-  }
-
-  nav ul {
-    display: none;
-    flex-direction: column;
-    position: fixed;
-    top: 70px;
-    left: 0;
-    width: 100%;
-    height: calc(100% - 70px);
-    background-color: #0077b6;
-  }
-
-  nav li {
-    width: 100%;
-    text-align: center;
-  }
-
-  nav a {
-    padding: 10px 0;
-  }
-
-  nav a:hover {
-    background-color: #fff;
-    color: #0077b6;
-  }
-
-  .menu-toggle.active + ul {
-    display: flex;
-  }
 }
