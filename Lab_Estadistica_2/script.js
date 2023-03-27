@@ -1,3 +1,4 @@
+
 // Esperamos a que cargue el DOM
 document.addEventListener('DOMContentLoaded', function () {
   // Obtenemos la barra de navegación
@@ -28,11 +29,10 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 });
-
 // Desplazamiento suave al hacer clic en los enlaces del menú de navegación
-const navLinksSmooth = document.querySelectorAll('.navbar-menu a');
+const navLinks = document.querySelectorAll('.navbar-menu a');
 
-navLinksSmooth.forEach((link) => {
+navLinks.forEach((link) => {
   link.addEventListener('click', (event) => {
     event.preventDefault();
     const target = document.querySelector(link.getAttribute('href'));
@@ -46,10 +46,15 @@ navLinksSmooth.forEach((link) => {
   });
 });
 
-// Menu hamburguesa
-const menuBtn = document.querySelector(".menu-btn");
-const navLinks = document.querySelector(".nav-links");
+// Animación del menú hamburguesa
+const toggleMenu = () => {
+  const menuToggle = document.querySelector('.navbar-toggle');
+  const navbarMenu = document.querySelector('.navbar-menu');
+  menuToggle.classList.toggle('active');
+  navbarMenu.classList.toggle('active');
+};
 
-menuBtn.addEventListener("click", () => {
-   navLinks.classList.toggle("open");
-});
+const menuToggle = document.querySelector('.navbar-toggle');
+menuToggle.addEventListener('click', toggleMenu);
+
+
