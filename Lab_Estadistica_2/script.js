@@ -28,10 +28,11 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 });
-// Desplazamiento suave al hacer clic en los enlaces del menú de navegación
-const navLinks = document.querySelectorAll('.navbar-menu a');
 
-navLinks.forEach((link) => {
+// Desplazamiento suave al hacer clic en los enlaces del menú de navegación
+const navLinksSmooth = document.querySelectorAll('.navbar-menu a');
+
+navLinksSmooth.forEach((link) => {
   link.addEventListener('click', (event) => {
     event.preventDefault();
     const target = document.querySelector(link.getAttribute('href'));
@@ -44,6 +45,7 @@ navLinks.forEach((link) => {
     toggleMenu();
   });
 });
+
 // Menu hamburguesa
 const menuBtn = document.querySelector(".menu-btn");
 const navLinks = document.querySelector(".nav-links");
