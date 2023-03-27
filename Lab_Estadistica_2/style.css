@@ -109,3 +109,7 @@ section p {
 .navbar-menu.active {
   max-height: 100vh;
 }
+.image {
+  max-width: 100%;
+  height: auto;
+}
