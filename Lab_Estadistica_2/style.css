@@ -128,21 +128,66 @@ section p {
 }
 
 .navbar-menu {
+  display: none;
   position: absolute;
   top: 100%;
   left: 0;
   right: 0;
-  display: flex;
-  flex-direction: column;
   background-color: #0077b6;
   padding: 10px;
-  overflow: hidden;
-  max-height: 0;
   transition: all 0.3s ease;
 }
 
 .navbar-menu.active {
-  max-height: 100vh;
+  display: block;
+}
+
+.navbar-toggle {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.navbar-toggle-icon {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background-color: #fff;
+  position: relative;
+  margin-top: 5px;
+  transition: all 0.3s ease;
+}
+
+.navbar-toggle-icon::before,
+.navbar-toggle-icon::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  transition: all 0.3s ease;
+}
+
+.navbar-toggle-icon::before {
+  transform: translateY(-8px);
+}
+
+.navbar-toggle-icon::after {
+  transform: translateY(8px);
+}
+
+.navbar-toggle.active .navbar-toggle-icon {
+  background-color: transparent;
+}
+
+.navbar-toggle.active .navbar-toggle-icon::before {
+  transform: translateY(0) rotate(45deg);
+}
+
+.navbar-toggle.active .navbar-toggle-icon::after {
+  transform: translateY(0) rotate(-45deg);
 }
 
 .image {
