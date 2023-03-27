@@ -44,14 +44,3 @@ navLinks.forEach((link) => {
     toggleMenu();
   });
 });
-
-// Animación del menú hamburguesa
-const toggleMenu = () => {
-  const menuToggle = document.querySelector('.navbar-toggle');
-  const navbarMenu = document.querySelector('.navbar-menu');
-  menuToggle.classList.toggle('active');
-  navbarMenu.classList.toggle('active');
-};
-
-const menuToggle = document.querySelector('.navbar-toggle');
-menuToggle.addEventListener('click', toggleMenu);
