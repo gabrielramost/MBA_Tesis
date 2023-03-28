@@ -1,11 +1,11 @@
-$(document).ready(function() {
-  $('.menu-btn').click(function() {
-    $(this).toggleClass('open');
-    $('.nav').toggleClass('open');
-  });
+// Obtiene elementos del DOM
+const hamburger = document.getElementById('hamburger');
+const menu = document.getElementById('menu');
 
-  $('.nav__link').click(function() {
-    $('.menu-btn').removeClass('open');
-    $('.nav').removeClass('open');
-  });
-});
+// Función para abrir o cerrar el menú hamburguesa
+function toggleMenu() {
+  menu.classList.toggle('show');
+}
+
+// Event listener para el menú hamburguesa
+hamburger.addEventListener('click', toggleMenu);
