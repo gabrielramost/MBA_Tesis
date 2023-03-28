@@ -1,36 +1,53 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mi Página Web</title>
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Alegreya&display=swap" rel="stylesheet">
-</head>
-<body>
-  <nav class="nav">
-    <div class="nav__logo">Mi Página Web</div>
-    <ul class="nav__menu">
-      <li class="nav__item"><a href="session1.html" class="nav__link">Sesión 1</a></li>
-      <li class="nav__item"><a href="session2.html" class="nav__link">Sesión 2</a></li>
-      <li class="nav__item"><a href="session3.html" class="nav__link">Sesión 3</a></li>
-      <li class="nav__item"><a href="session4.html" class="nav__link">Sesión 4</a></li>
-      <li class="nav__item"><a href="session5.html" class="nav__link">Sesión 5</a></li>
-      <li class="nav__item"><a href="session6.html" class="nav__link">Sesión 6</a></li>
-      <li class="nav__item"><a href="session7.html" class="nav__link">Sesión 7</a></li>
-      <li class="nav__item"><a href="session8.html" class="nav__link">Sesión 8</a></li>
-    </ul>
-    <div class="nav__toggle">
-      <div class="nav__icon"></div>
-    </div>
-  </nav>
-  
-  <main>
-    <h1>Bienvenido a Mi Página Web</h1>
-    <p>Esta es la página de inicio de mi sitio web.</p>
-  </main>
-  
-  <script src="script.js"></script>
-</body>
-</html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mi página web responsive</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="logo">
+          <a href="#">Mi Logo</a>
+        </div>
+        <nav>
+          <ul>
+            <li><a href="sesion1.html">Sesión 1</a></li>
+            <li><a href="sesion2.html">Sesión 2</a></li>
+            <li><a href="sesion3.html">Sesión 3</a></li>
+            <li><a href="sesion4.html">Sesión 4</a></li>
+            <li><a href="sesion5.html">Sesión 5</a></li>
+            <li><a href="sesion6.html">Sesión 6</a></li>
+            <li><a href="sesion7.html">Sesión 7</a></li>
+            <li><a href="sesion8.html">Sesión 8</a></li>
+          </ul>
+        </nav>
+        <div class="menu-toggle"><i class="fa fa-bars"></i></div>
+      </div>
+    </header>
 
+    <main>
+      <section class="hero">
+        <div class="container">
+          <h1>Bienvenido a mi página web</h1>
+          <p>En esta página encontrarás información relevante para ti</p>
+          <a href="#about" class="btn">Acerca de mí</a>
+        </div>
+      </section>
+
+      <section id="about">
+        <div class="container">
+          <h2>Acerca de mí</h2>
+          <p>En esta sección, podrás conocer más sobre mí y mi experiencia.</p>
+        </div>
+      </section>
+
+      <!-- Aquí podríamos agregar más secciones con diferentes IDs -->
+
+    </main>
+
+    <script src="js/app.js"></script>
+  </body>
+</html>
