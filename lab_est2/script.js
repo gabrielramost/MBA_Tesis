@@ -1,11 +1,6 @@
-// Obtiene elementos del DOM
-const hamburger = document.getElementById('hamburger');
-const menu = document.getElementById('menu');
+const menuToggle = document.querySelector(".menu-toggle");
+const nav = document.querySelector("nav");
 
-// Función para abrir o cerrar el menú hamburguesa
-function toggleMenu() {
-  menu.classList.toggle('show');
-}
-
-// Event listener para el menú hamburguesa
-hamburger.addEventListener('click', toggleMenu);
+menuToggle.addEventListener("click", () => {
+  nav.classList.toggle("active");
+});
