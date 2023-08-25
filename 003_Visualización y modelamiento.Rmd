@@ -1,0 +1,365 @@
+---
+title: "003_Visualización y modelamiento"
+output: html_document
+date: "2023-08-16"
+---
+
+Apertura de bases de datos
+
+```{r}
+library(rio)
+library(dplyr)
+bbdd_mundo = import("003_bbdd_transformada_1996_2019.csv")
+bbdd_mundo$v2caviol = NULL
+bbdd_mundo$v2x_regime = NULL
+bbdd_mundo$v2xcl_prpty = NULL
+```
+
+
+
+```{r}
+# Reordenar las columnas de la base de datos bbdd_mundo
+bbdd_mundo <- bbdd_mundo[, c("FDI4", 
+                             "country_name", 
+                             "year", 
+                             "Factor_gobernanza", 
+                             "v2cacamps", 
+                             "v2cagenmob", 
+                             "v2x_corr", 
+                             "v2x_polyarchy", 
+                             "e_gdp", 
+                             "e_miinflat", 
+                             "hdi", 
+                             "economic_freedom", 
+                             "tiempo_negocios")]
+```
+
+```{r}
+# Cambiar los nombres de las columnas de la base de datos bbdd_mundo
+colnames(bbdd_mundo) <- c("IED", 
+                          "País", 
+                          "Año", 
+                          "Gobernanza", 
+                          "Polarización", 
+                          "Movilización", 
+                          "Corrupción", 
+                          "Democracia", 
+                          "PBI", 
+                          "Inflación", 
+                          "HDI", 
+                          "Libertad_económica", 
+                          "Tiempo_negocios")
+```
+
+
+
+Subsets a utilizar
+
+LATAM
+
+
+```{r}
+# Nombres de los países de América Latina
+paises_latinoamerica <- c("Argentina", "Bolivia", "Brazil", "Chile", "Colombia", 
+                          "Costa Rica", "Dominican Republic", "Ecuador", 
+                          "El Salvador", "Guatemala", "Honduras", "Mexico", 
+                          "Nicaragua", "Panama", "Paraguay", "Peru", "Uruguay", 
+                          "Venezuela, RB", "Guyana", "Suriname", 
+                          "Jamaica", "Trinidad and Tobago", "Barbados", "Saint Lucia", 
+                          "Grenada", "Haiti")
+# Filtrar el dataframe original para crear el subset
+bbdd_latam <- bbdd_mundo[bbdd_mundo$País %in% paises_latinoamerica, ]
+rownames(bbdd_latam) <- NULL
+```
+
+```{r}
+#export(bbdd_latam,"004_bbdd_latam_1996_2019.csv")
+```
+
+ASEAN
+
+```{r}
+paises_asean <- c("Myanmar", "Brunei", "Cambodia", "Philippines", "Indonesia", 
+                  "Lao PDR", "Malaysia", "Singapore", "Thailand", "Vietnam")
+bbdd_asean <- bbdd_mundo[bbdd_mundo$País %in% paises_asean, ]
+rownames(bbdd_asean) <- NULL
+```
+
+```{r}
+#export(bbdd_asean,"005_bbdd_asean_1996_2019.csv")
+```
+
+
+# Análisis global
+
+
+```{r}
+library(dlookr)
+diagnose_numeric(bbdd_mundo)
+```
+
+
+
+
+## Cálculo de correlation - Mundial
+
+
+```{r}
+library(dlookr)
+library(dplyr)
+correlate(bbdd_mundo, method = c("spearman")) 
+```
+
+
+```{r}
+library(dlookr)
+library(dplyr)
+bbdd_mundo %>%#correlación de una variable
+  correlate(IED, method = c("spearman")) %>%
+  plot() 
+```
+
+## Cálculo de correlation - America Latina
+
+```{r}
+correlate(bbdd_latam, method = c("spearman")) 
+```
+
+
+
+```{r}
+library(dlookr)
+library(dplyr)
+bbdd_latam %>%#correlación de una variable
+  correlate(IED, method = c("spearman")) %>%
+  plot()
+```
+
+## Asean
+
+
+```{r}
+correlate(bbdd_asean, method = c("spearman")) 
+```
+
+
+
+```{r}
+library(dlookr)
+library(dplyr)
+bbdd_asean %>%#correlación de una variable
+  correlate(IED, method = c("spearman")) %>%
+  plot()
+```
+
+# Modelamiento
+
+Heterogeneridad entre paises
+
+```{r warning=FALSE}
+library(gplots)
+plotmeans(IED ~ Año, main = "Heterogeneidad entre paises", data = bbdd_mundo)
+```
+
+
+```{r warning=FALSE}
+plotmeans(IED ~ Año, main = "Heterogeneidad a traves del tiempo", data = bbdd_mundo)
+```
+
+## Modelos de efectos fijos o aleatorios
+
+Preparamos la data
+
+```{r}
+library(plm)
+pdata <- pdata.frame(bbdd_mundo, index = c("País", "Año"))
+```
+
+### Pool de datos
+
+```{r}
+formula = IED ~ Gobernanza + Polarización + Movilización + Corrupción + Democracia + PBI + Inflación + HDI + Libertad_económica + Tiempo_negocios
+```
+
+### Modelo de efectos fijos
+
+```{r}
+modelo2 <- plm(formula, 
+                data = pdata, 
+                model = "within")  ## modelo de regresión de efectos fijos
+summary(modelo2)
+```
+
+### Modelos aleatorios
+
+```{r}
+modelo3 <- plm(formula, 
+                data = pdata, 
+                model = "random")
+summary(modelo3)
+```
+
+```{r}
+resultado_hausman <- phtest(modelo2, modelo3)
+print(resultado_hausman)
+```
+
+Mejor modelo recomendado: Modelo de efectos fijos
+
+### Modelo rezagado
+
+
+```{r}
+library(plm)
+
+# Variables que quieres rezagar
+vars <- c("Polarización", "Movilización", "Corrupción", "Democracia")
+
+# Creando las variables rezagadas
+for (var in vars) {
+  new_var_name <- paste(var, "lag1", sep = "_")
+  pdata[[new_var_name]] <- lag(pdata[[var]], 1)
+}
+```
+
+
+```{r}
+formula_lag_vars_m = IED ~ Gobernanza + Polarización_lag1 + Movilización_lag1 + Corrupción_lag1 + Democracia_lag1 + PBI + Inflación + HDI + Libertad_económica + Tiempo_negocios
+
+modelo4 <- plm(formula_lag_vars_m, data=pdata, model="within")
+summary(modelo4)
+```
+
+#Modelo elegido
+
+
+```{r}
+library(stargazer)
+Efectos_Fijos <- modelo2
+
+stargazer(Efectos_Fijos, type = "text", 
+          dep.var.labels = "Inversión extranjera directa, entrada neta de capital (US$)", 
+          model.names=TRUE)
+```
+
+
+## América latina
+
+Preparamos la data
+
+```{r}
+library(plm)
+pdata_latam <- pdata.frame(bbdd_latam, index = c("País", "Año"))
+```
+
+
+```{r}
+library(plm)
+modelo_latam2 <- plm(formula, data = pdata_latam, model = "within")
+summary(modelo_latam2)
+```
+
+
+```{r}
+library(plm)
+modelo_latam3 <- plm(formula, data = pdata_latam, model = "random")
+summary(modelo_latam3)
+```
+
+
+```{r}
+resultado_hausman <- phtest(modelo_latam2, modelo_latam3)
+print(resultado_hausman)
+```
+
+Mejor modelo recomendado: Modelo de efectos fijos
+
+
+```{r}
+library(plm)
+
+# Variables que quieres rezagar
+vars <- c("Gobernanza","Corrupción")
+
+# Creando las variables rezagadas
+for (var in vars) {
+  new_var_name <- paste(var, "lag1", sep = "_")
+  pdata_latam[[new_var_name]] <- lag(pdata_latam[[var]], 1)
+}
+```
+
+
+```{r}
+formula_lag_vars_2 = IED ~ Gobernanza_lag1 + Polarización + Movilización + Corrupción_lag1 + Democracia + PBI + Inflación + HDI + Libertad_económica + Tiempo_negocios
+
+modelo_latam4 <- plm(formula_lag_vars_2, data=pdata_latam, model="within")
+summary(modelo_latam4)
+```
+
+```{r}
+stargazer(modelo_latam4, type = "text", 
+          dep.var.labels = "Inversión extranjera directa, entrada neta de capital (US$)", 
+          model.names=TRUE)
+```
+
+
+## ASEAN
+
+Preparamos la data
+
+```{r}
+library(plm)
+pdata_asean <- pdata.frame(bbdd_asean, index = c("País", "Año"))
+```
+
+
+```{r}
+library(plm)
+modelo_asean2 <- plm(formula, data = pdata_asean, model = "within")
+summary(modelo_asean2)
+```
+
+
+
+```{r}
+library(plm)
+
+# Variables que quieres rezagar
+vars <- c("Gobernanza")
+
+# Creando las variables rezagadas
+for (var in vars) {
+  new_var_name <- paste(var, "lag1", sep = "_")
+  pdata_asean[[new_var_name]] <- lag(pdata_asean[[var]], 2)
+}
+```
+
+
+```{r}
+formula_lag_vars_3 = IED ~ Gobernanza_lag1 + Polarización + Movilización + Corrupción + Democracia + PBI + Inflación + HDI + Libertad_económica + Tiempo_negocios
+
+modelo_asean4 <- plm(formula_lag_vars_3, data=pdata_asean, model="within")
+summary(modelo_asean4)
+```
+
+
+
+Comparación 
+
+
+```{r}
+stargazer(modelo_asean4, type = "text")
+```
+
+
+```{r}
+stargazer(Efectos_Fijos, modelo_latam4, modelo_asean4, type = "text", 
+          dep.var.labels = "Inversión extranjera directa, entrada neta de capital (US$)", 
+          model.names=TRUE, 
+          notes=c("Modelo 1: Escenario Global", "Modelo 2: Escenario América Latina", "Modelo 3: Escenario ASEAN"))
+
+```
+
+
+
+

@@ -1,0 +1,31 @@
+---
+title: "Importación"
+output: html_document
+date: "2023-07-13"
+---
+
+#BOP
+
+```{r}
+library(rio)
+df = import("001_FDI_IMF.csv")
+```
+
+# V - Dem
+
+```{r}
+df2 = import("V-Dem-CY-Full+Others-v13.dta")
+library(dplyr)
+
+df2 <- df2 %>%
+  select(country_name, country_text_id, year, v2x_polyarchy, v2x_libdem, v2x_partipdem, v2x_delibdem, v2x_egaldem, v2cacamps, v2caviol, v2cagenmob, v2cademmob, v2x_regime, v2x_neopat, v2xnp_client, v2xnp_regcorr, v2x_corr, v2x_execorr, v2x_pubcorr, v2x_rule,v2xcl_prpty, v2xcl_acjst, v2x_freexp, e_wbgi_cce, e_wbgi_gee, e_wbgi_pve, e_wbgi_rle, e_wbgi_rqe, e_wbgi_vae, e_gdp, e_gdppc, e_miinflat, e_total_fuel_income_pc, e_total_resources_income_pc)
+
+export(df2, "002_VDEM_BM.dta")
+
+a = import("002_VDEM_BM.dta")
+```
+
+
+
+
+

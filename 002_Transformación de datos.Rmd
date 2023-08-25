@@ -1,0 +1,300 @@
+---
+title: "002_Transformación de datos"
+output: html_document
+date: "2023-08-16"
+---
+
+# Apertura de base de datos
+
+```{r message=FALSE, warning=FALSE}
+library(rio)
+library(dplyr)
+bbdd_mundo = import("https://github.com/gabrielramost/MBA_Tesis/raw/main/002_Merge/002_bbdd_completa_1996_2019.csv")
+bbdd_mundo$V1 = NULL
+```
+
+```{r}
+# Cambiamos la escala al Indice de libertad económica
+bbdd_mundo <- bbdd_mundo %>%
+  mutate(economic_freedom = economic_freedom / 100)
+```
+
+```{r}
+# Crear una identificación única para cada combinación de país y año
+bbdd_mundo$unique_id <- paste(bbdd_mundo$country_name, bbdd_mundo$year, sep = "_")
+rownames(bbdd_mundo) <- bbdd_mundo$unique_id
+bbdd_mundo$unique_id <- NULL
+```
+
+
+# Imputación de Valores perdidos
+
+```{r}
+# Calcular el porcentaje de datos perdidos por cada variable
+missing_percentage <- function(data){
+  sapply(data, function(x) {
+    sum(is.na(x)) / length(x) * 100
+  })
+}
+
+# Ejecutar la función en tu base de datos
+missing_data <- missing_percentage(bbdd_mundo)
+
+# Imprimir el resultado
+print(missing_data)
+
+if(require(ggplot2)){
+  df_missing <- data.frame(variable = names(missing_data), percentage = missing_data)
+  
+  ggplot(df_missing, aes(x = reorder(variable, percentage), y = percentage)) +
+    geom_bar(stat = "identity") +
+    coord_flip() +
+    labs(title = "Porcentaje de Datos Perdidos por Variable",
+         x = "Variable",
+         y = "Porcentaje de Datos Perdidos")
+} 
+```
+
+La imputación múltiple es un enfoque estadístico que permite manejar datos faltantes de una manera estructurada, generando varias imputaciones (valores reemplazados) para cada dato faltante. Una de las ventajas de la imputación múltiple es que refleja la incertidumbre asociada con los valores faltantes. El paquete mice (Multiple Imputation by Chained Equations) en R es uno de los más populares para realizar imputación múltiple.
+
+Imputación Múltiple usando mice en R:
+
++ Chained Equations: La idea detrás de mice es utilizar modelos de regresión para predecir y llenar los datos faltantes. Esto se hace variable por variable, utilizando el resto como predictores. Este proceso se repite varias veces para cada variable con datos faltantes.
+
++ Múltiples conjuntos de datos: En lugar de imputar un solo valor para cada dato faltante, mice crea múltiples conjuntos de datos (por ejemplo, 5 o 10). Estos conjuntos se analizan de forma independiente y, posteriormente, se combinan para obtener una estimación y una inferencia estadística más robustas.
+
++ Random Forest como método de imputación: El algoritmo de Random Forest no solo se utiliza para la clasificación o la regresión, sino que también puede ser empleado para la imputación de datos faltantes. Al aplicar Random Forest para la imputación, el algoritmo aprende de las observaciones con datos completos y predice los valores faltantes.
+
+El paquete mice en R permite utilizar el método de Random Forest como uno de sus métodos de imputación. Al utilizar este enfoque, uno se beneficia de la capacidad del Random Forest para manejar interacciones complejas y no linealidades en los datos, lo que puede resultar en imputaciones más precisas.
+
+
+```{r message=FALSE, warning=FALSE}
+library(mice)
+
+#Seleccionamos variables a imputar
+data_to_impute <- bbdd_mundo %>% 
+  select(-year) %>%
+  select_if(is.numeric)
+
+# Imputar los datos
+imputed_data_mice <- mice(data_to_impute, m = 5, method="rf")
+bbdd_mundo_imputed_1 <- complete(imputed_data_mice, 1)
+```
+
+
+```{r}
+library(dplyr)
+
+# Convertir rownames en caracteres y asignar a la columna 'id'
+bbdd_mundo_imputed_1$id <- as.character(rownames(bbdd_mundo_imputed_1))
+bbdd_mundo$id <- as.character(rownames(bbdd_mundo))
+
+# Unir dataframes
+merged_data <- left_join(bbdd_mundo, bbdd_mundo_imputed_1, by = "id", suffix = c("", "_imputed"))
+
+vars_to_update <- c("FDI4", "control_corrupcion", "gobierno_eficacia", "estabilidad_politica", 
+                   "calidad_regulatoria", "estado_derecho", "voz_rendicion", "tiempo_negocios", 
+                   "hdi", "v2x_polyarchy", "v2cacamps", "v2caviol", "v2cagenmob", "v2x_corr", "v2x_rule", "v2xcl_prpty", "e_gdp", "e_miinflat", 
+                   "economic_freedom")
+
+for (var in vars_to_update) {
+  merged_data[[var]] <- ifelse(is.na(merged_data[[paste0(var, "_imputed")]]),
+                              merged_data[[var]],
+                              merged_data[[paste0(var, "_imputed")]])
+  
+  # Eliminar columnas "_imputed"
+  merged_data[[paste0(var, "_imputed")]] <- NULL
+}
+```
+
+
+```{r}
+bbdd_mundo = merged_data
+bbdd_mundo$id = NULL
+```
+
+
+# Detección de outliers
+
+La presencia de valores atípicos (o outliers) no es inherentemente "incorrecta" o un "error". Sin embargo, pueden afectar significativamente los resultados de muchos procedimientos estadísticos. Por ejemplo, en una regresión, los outliers pueden inflar la varianza de los errores, disminuir la potencia de las pruebas estadísticas y disminuir la validez de los coeficientes estimados.
+
+Detectar outliers puede ser un proceso multifacético, ya que existen diferentes enfoques y métodos según el contexto y la naturaleza de tus datos. Uno de los métodos comunes para detectar outliers en datos numéricos es mediante el uso de los diagramas de caja (boxplots), que se basan en la idea de IQR (rango intercuartil).
+
+El rango intercuartil (IQR) se define como la diferencia entre el tercer y el primer cuartil. Los datos que caen fuera de 1.5 veces el IQR (por encima del tercer cuartil o por debajo del primer cuartil) se consideran outliers.
+
+El output que has proporcionado indica la cantidad de outliers para cada variable. Algunas de tus variables, como FDI4 y e_gdp, tienen un número bastante elevado de outliers.
+
+```{r}
+numeric_vars <- names(bbdd_mundo)[-which(names(bbdd_mundo) %in% c("country_name", "year", "v2x_regime"))]  # Excluir variables no numéricas
+
+# Detección de outliers basada en IQR
+count_outliers <- function(data, column_name) {
+  Q1 <- quantile(data[[column_name]], 0.25, na.rm = TRUE)
+  Q3 <- quantile(data[[column_name]], 0.75, na.rm = TRUE)
+  IQR <- Q3 - Q1
+  
+  # Umbral para outliers
+  upper_bound <- Q3 + 1.5 * IQR
+  lower_bound <- Q1 - 1.5 * IQR
+  
+  num_outliers <- sum(data[[column_name]] > upper_bound | data[[column_name]] < lower_bound, na.rm = TRUE)
+  return(num_outliers)
+}
+
+# Contar outliers para cada variable numérica
+outliers_count_list <- sapply(numeric_vars, function(var) count_outliers(bbdd_mundo, var))
+
+# Imprimir el número de outliers detectados por variable
+print(outliers_count_list)
+
+
+```
+
+
+```{r}
+library(dlookr)
+diagnose_outlier(bbdd_mundo)
+diagnose_outlier(bbdd_mundo) %>% # ubicar los outliers 
+  filter(outliers_cnt > 0) 
+diagnose_outlier(bbdd_mundo) %>%  #  encuentra una variable numérica con una relación atípica de 5% o más, y luego devuelve el resultado de dividir la media de valores atípicos por media total en orden descendente. En los casos en que la media de los valores atípicos es grande en relación con el total promedio, puede ser deseable imputar o eliminar los valores atípicos.
+  filter(outliers_ratio > 5) %>% 
+  mutate(rate = outliers_mean / with_mean) %>% 
+  arrange(desc(rate)) %>% 
+  select(-outliers_cnt)
+```
+
+```{r}
+bbdd_mundo %>%
+  plot_outlier(diagnose_outlier(bbdd_mundo) %>% 
+                 filter(outliers_ratio >= 0.5) %>% 
+                 select(variables) %>% 
+                 unlist())
+```
+
+
+# Análisis de multicolinealidad
+
+Prueba VIF
+
+```{r}
+library(plm)
+library(car)
+pdata <- pdata.frame(bbdd_mundo, index = c("country_name", "year"))
+modelo <- plm(FDI4 ~ control_corrupcion + gobierno_eficacia + estabilidad_politica + 
+                calidad_regulatoria + estado_derecho + voz_rendicion + 
+                tiempo_negocios + hdi + v2x_polyarchy + v2cacamps + 
+                v2caviol + v2cagenmob + v2x_corr + v2x_rule + v2xcl_prpty + 
+                e_gdp + e_miinflat + economic_freedom, 
+              data = pdata, model = "random")
+
+# Calcular el VIF
+vif_values <- vif(modelo)
+
+vif_values = data.frame(vif_values)
+
+# Visualizar el VIF
+vif_values
+```
+
+Eliminamos variables innecesarias
+
+```{r}
+bbdd_mundo$v2x_rule = NULL
+bbdd_mundo$v2x_regime = NULL
+```
+
+
+## Técnica de reducción de dimensiones
+
+
+```{r}
+library(psych)
+
+# Seleccionar solo las columnas de interés
+subdata <- bbdd_mundo[,c("voz_rendicion", "estabilidad_politica","gobierno_eficacia","calidad_regulatoria","estado_derecho","control_corrupcion")]
+
+# Realizar el análisis factorial
+result <- factanal(subdata, factors = 1, rotation = "varimax")
+print(result)
+```
+
+
+
+
+```{r}
+eigenvals <- eigen(cor(subdata))$values
+plot(eigenvals, type="b", ylab="Eigenvalue", xlab="Factor number", main="Scree plot")
+abline(h=1, col="red", lty=2)
+
+```
+
+
+```{r}
+# Calcular los puntajes factoriales
+factor_scores <- factanal(x = subdata, factors = 1, rotation = "varimax", scores = "regression")$scores
+
+# Añadir los puntajes factoriales a tu base de datos original
+bbdd_mundo$Factor_gobernanza <- factor_scores
+
+bbdd_mundo$Factor_gobernanza = as.numeric(bbdd_mundo$Factor_gobernanza)
+
+# Verificar que los puntajes se han añadido correctamente
+head(bbdd_mundo)
+```
+
+```{r}
+library(dplyr)
+
+bbdd_mundo <- bbdd_mundo %>%
+  select(-c("voz_rendicion", "estabilidad_politica","gobierno_eficacia","calidad_regulatoria","estado_derecho","control_corrupcion"))
+```
+
+
+Evaluamos nuevamente la multicolinealidad (Prueba VIF)
+
+```{r}
+library(plm)
+library(car)
+pdata <- pdata.frame(bbdd_mundo, index = c("country_name", "year"))
+modelo <- plm(FDI4 ~ Factor_gobernanza + tiempo_negocios + hdi + v2x_polyarchy + v2cacamps + 
+                v2caviol + v2cagenmob + v2x_corr + v2xcl_prpty + 
+                e_gdp + e_miinflat + economic_freedom, 
+              data = pdata, model = "random")
+
+# Calcular el VIF
+vif_values <- vif(modelo)
+
+vif_values = data.frame(vif_values)
+
+# Visualizar el VIF
+print(vif_values)
+```
+
+# Pruebas de normalidad
+
+```{r}
+normality(bbdd_mundo)
+bbdd_mundo %>% #ver de mayor a menor p value
+  normality() %>% 
+  arrange(desc(p_value))
+```
+
+```{r}
+plot_normality(bbdd_mundo)
+```
+
+
+
+```{r}
+export(bbdd_mundo,"003_bbdd_transformada_1996_2019.csv")
+```
+
+
+
+
+
+
+
+
+
+
